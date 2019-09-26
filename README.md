@@ -42,5 +42,5 @@ docker build --tag local/centos-8:latest ./tag-latest
 docker build --tag local/centos-8:init ./tag-init
 ```
 
-## Create a tarball using a kickstart script
+### Create a tarball using a kickstart script
 WORK IN PROGRESS
