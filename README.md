@@ -76,37 +76,37 @@ docker build --tag local/centos-8:systemd ./tag-systemd
 In order to generate a `centos-8.tar.xz` tarball, we need a CentOS 7.x/8.x machine. In this tutorial, we're gonna use a container with `adevur/centos-8:latest` (that provides a CentOS 8 environment), so that we can generate the tarball on any Linux machine.
 
 - First, let's create a directory on our system, where we'll put all the files we need (including the newly-generated tarball):
-```sh
-mkdir /tarball-builder
-```
+  ```sh
+  mkdir /tarball-builder
+  ```
 
 - Let's put the kickstart script into `/tarball-builder`:
-```sh
-# in this tutorial, we're gonna use the already-written kickstart script found on this GitHub,
-#   but you can also edit or rewrite this kickstart if you want to
-curl -sL https://raw.githubusercontent.com/adevur/docker-centos-8/master/tag-latest/centos-8-adevur0-amd64.ks > /tarball-builder/centos-8.ks
-```
+  ```sh
+  # in this tutorial, we're gonna use the already-written kickstart script found on this GitHub,
+  #   but you can also edit or rewrite this kickstart if you want to
+  curl -sL https://raw.githubusercontent.com/adevur/docker-centos-8/master/tag-latest/centos-8-adevur0-amd64.ks > /tarball-builder/centos-8.ks
+  ```
 
 - Let's set up our environment with CentOS 8 installed in it:
-```sh
-# NOTE: you can also set up the container with CentOS 7 installed, and it should work the same, but it's not been tested
-docker run -v /tarball-builder:/tarball-builder --privileged --name tarball-builder --rm -it adevur/centos-8:latest /bin/bash
-```
+  ```sh
+  # NOTE: you can also set up the container with CentOS 7 installed, and it should work the same, but it's not been tested
+  docker run -v /tarball-builder:/tarball-builder --privileged --name tarball-builder --rm -it adevur/centos-8:latest /bin/bash
+  ```
 
 - Now that we're inside the container, let's install the software needed to generate the tarball (i.e. packages `lorax` and `anaconda-tui`):
-```sh
-yum clean all && yum install -y lorax anaconda-tui && yum clean all
-```
+  ```sh
+  yum clean all && yum install -y lorax anaconda-tui && yum clean all
+  ```
 
 - We can now generate the tarball and save it to `/tarball-builder`:
-```sh
-cd /tarball-builder
+  ```sh
+  cd /tarball-builder
 
-livemedia-creator --no-virt --make-tar --ks centos-8.ks --image-name=centos-8.tar.xz --project "CentOS 8 Docker" --releasever "8"
+  livemedia-creator --no-virt --make-tar --ks centos-8.ks --image-name=centos-8.tar.xz --project "CentOS 8 Docker" --releasever "8"
 
-mv /var/tmp/centos-8.tar.xz /tarball-builder/centos-8.tar.xz
+  mv /var/tmp/centos-8.tar.xz /tarball-builder/centos-8.tar.xz
 
-exit
-```
+  exit
+  ```
 
 - Now we can exit from the container: our tarball has been generated and is located at path `/tarball-builder/centos-8.tar.xz` on our computer. You can use this tarball to build tag `latest` of `adevur/centos-8` Docker image.
