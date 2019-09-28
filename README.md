@@ -55,9 +55,9 @@ systemctl status sshd.service
 ## Building
 - In order to build `adevur/centos-8:latest`, you need:
 
-  1) A `rootfs` tarball that contains the filesystem. I've generated the tarball already (you can find it at `./tag-latest/centos-8-adevur.tar.xz`), but you can also generate it by yourself.
+  1) A `rootfs` tarball that contains the filesystem. I've generated the tarball already (you can find it at `./tag-latest/centos-8-adevur0-amd64.tar.xz`), but you can also generate it by yourself.
   
-  2) A kickstart script, in case you want to build the tarball yourself. I've already written a kickstart script (you can find it at `./tag-latest/centos-8-adevur.ks`). You can try to write one yourself too, if you want to customize something.
+  2) A kickstart script, in case you want to build the tarball yourself. I've already written a kickstart script (you can find it at `./tag-latest/centos-8-adevur0.ks`). You can write one yourself too, if you want to customize something.
   
   3) A `Dockerfile` (you can find an example at `./tag-latest/Dockerfile`).
   
