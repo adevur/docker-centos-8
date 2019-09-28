@@ -16,13 +16,7 @@ In order to use the `latest` tag, just type:
 docker run -it --rm adevur/centos-8:latest /bin/bash
 ```
 
-And you will get a `bash` terminal inside the container. I suggest to install at least package `ncurses`, in order to have essential commands like `clear`:
-```sh
-yum clean all
-yum install ncurses -y
-```
-
-You can check that you're running CentOS 8.0 by typing:
+And you will get a `bash` terminal inside the container. You can check that you're running CentOS 8.0 by typing:
 ```sh
 cat /etc/redhat-release
 # EXPECTED OUTPUT: CentOS Linux release 8.0.1905 (Core)
@@ -90,7 +84,7 @@ mkdir /tarball-builder
 ```sh
 # in this tutorial, we're gonna use the already-written kickstart script found on this GitHub,
 #   but you can also edit or rewrite this kickstart if you want to
-curl https://raw.githubusercontent.com/adevur/docker-centos-8/master/tag-latest/centos-8-adevur0-amd64.ks > /tarball-builder/centos-8.ks
+curl -sL https://raw.githubusercontent.com/adevur/docker-centos-8/master/tag-latest/centos-8-adevur0-amd64.ks > /tarball-builder/centos-8.ks
 ```
 
 - Let's set up our environment with CentOS 8 installed in it:
@@ -115,4 +109,4 @@ mv /var/tmp/centos-8.tar.xz /tarball-builder/centos-8.tar.xz
 exit
 ```
 
-- Now we can exit from the container: our tarball has been generated and is located inside directory `/tarball-builder` on our computer. You can use this tarball to build tag `latest` of `adevur/centos-8` Docker image.
+- Now we can exit from the container: our tarball has been generated and is located at path `/tarball-builder/centos-8.tar.xz` on our computer. You can use this tarball to build tag `latest` of `adevur/centos-8` Docker image.
