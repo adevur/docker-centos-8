@@ -52,9 +52,9 @@ systemctl status sshd.service
 ## Building
 - In order to build tags `latest` and `latest-arm64v8`, you need:
 
-  1) A `rootfs` tarball that contains the filesystem. I've generated the tarball already (you can find it at `./tag-latest/centos-8-adevur0-amd64.tar.xz` for `amd64`, and at `./tag-latest/centos-8-adevur0-arm64v8.tar.xz` for `arm64v8`), but you can also generate it by yourself.
+  1) A `rootfs` tarball that contains the filesystem. I've generated the tarball already (you can find it at `./tag-latest/centos-8-adevur0-amd64.tar.xz` for `amd64`, and at `./tag-latest/centos-8-adevur0-aarch64.tar.xz` for `arm64v8`), but you can also generate it by yourself.
   
-  2) A kickstart script, in case you want to build the tarball yourself. I've already written a kickstart script (you can find it at `./tag-latest/centos-8-adevur0-amd64.ks` for `amd64`, and at `./tag-latest/centos-8-adevur0-arm64v8.ks` for `arm64v8`). You can write one yourself too, if you want to customize something.
+  2) A kickstart script, in case you want to build the tarball yourself. I've already written a kickstart script (you can find it at `./tag-latest/centos-8-adevur0-amd64.ks` for `amd64`, and at `./tag-latest/centos-8-adevur0-aarch64.ks` for `arm64v8`). You can write one yourself too, if you want to customize something.
   
   3) A `Dockerfile` (you can find an example at `./tag-latest/Dockerfile.amd64` for `amd64`, and at `./tag-latest/Dockerfile.arm64v8` for `arm64v8`).
   
