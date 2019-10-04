@@ -4,15 +4,17 @@
 This is an unofficial Docker image with CentOS 8.0 installed. This image should be very similar to [`registry.redhat.io/ubi8`](https://access.redhat.com/containers/?tab=overview#/registry.access.redhat.com/ubi8): the main two differences are that `ubi8` is based on Red Hat Enterprise Linux 8.0, while `adevur/centos-8` is based on CentOS 8.0; and that `ubi8` has access to a very limited package repository of RHEL 8.0, while `adevur/centos-8` has access to the entire package repository of CentOS 8.0 (i.e. `Base`, `Extras` and `AppStream`).
 
 ## Tags
-- `latest` (for all supported architectures): this is similar to Red Hat's [`ubi8`](https://access.redhat.com/containers/?tab=overview#/registry.access.redhat.com/ubi8).
+- `latest`: this is similar to Red Hat's [`ubi8`](https://access.redhat.com/containers/?tab=overview#/registry.access.redhat.com/ubi8).
 
-- [`latest-amd64`](https://github.com/adevur/docker-centos-8/blob/master/tag-latest/Dockerfile.amd64): same as `latest`, but only for `amd64` architecture.
+  > NOTE: tag `latest` will automatically download the correct architecture for your device (i.e. `amd64`, `arm64v8` or `ppc64le`); however, you can also use these tags to download a specific architecture: [`latest-amd64`](https://github.com/adevur/docker-centos-8/blob/master/tag-latest/Dockerfile.amd64), [`latest-arm64v8`](https://github.com/adevur/docker-centos-8/blob/master/tag-latest/Dockerfile.arm64v8) and [`latest-ppc64le`](https://github.com/adevur/docker-centos-8/blob/master/tag-latest/Dockerfile.ppc64le).
 
-- [`latest-arm64v8`](https://github.com/adevur/docker-centos-8/blob/master/tag-latest/Dockerfile.arm64v8): same as `latest`, but only for `arm64v8` architecture.
+- [`init`](https://github.com/adevur/docker-centos-8/blob/master/tag-init/Dockerfile): this is similar to Red Hat's [`ubi8-init`](https://access.redhat.com/containers/?tab=overview#/registry.access.redhat.com/ubi8-init).
 
-- [`init` (at the moment, only for `amd64` arch)](https://github.com/adevur/docker-centos-8/blob/master/tag-init/Dockerfile.amd64): this is similar to Red Hat's [`ubi8-init`](https://access.redhat.com/containers/?tab=overview#/registry.access.redhat.com/ubi8-init).
+  > NOTE: tag `init` will automatically download the correct architecture for your device (i.e. `amd64`, `arm64v8` or `ppc64le`); however, you can also use these tags to download a specific architecture: `init-amd64`, `init-arm64v8` and `init-ppc64le`.
 
-- [`systemd` (at the moment, only for `amd64` arch)](https://github.com/adevur/docker-centos-8/blob/master/tag-systemd/Dockerfile.amd64): this is similar to CentOS [`centos/systemd`](https://hub.docker.com/r/centos/systemd).
+- [`systemd`](https://github.com/adevur/docker-centos-8/blob/master/tag-systemd/Dockerfile): this is similar to CentOS [`centos/systemd`](https://hub.docker.com/r/centos/systemd).
+
+  > NOTE: tag `systemd` will automatically download the correct architecture for your device (i.e. `amd64`, `arm64v8` or `ppc64le`); however, you can also use these tags to download a specific architecture: `systemd-amd64`, `systemd-arm64v8` and `systemd-ppc64le`.
 
 ## Usage
 
@@ -22,7 +24,7 @@ In order to use the `latest` tag, just type:
 docker run -it --rm adevur/centos-8:latest /bin/bash
 ```
 
-And you will get a `bash` terminal inside the container. You can check that you're running CentOS 8.0 by typing:
+And you will get a `bash` terminal inside the container. You can check that you're running CentOS 8 by typing:
 ```sh
 cat /etc/redhat-release
 # EXPECTED OUTPUT: CentOS Linux release 8.0.1905 (Core)
@@ -55,30 +57,33 @@ systemctl status sshd.service
 ## Building
 - In order to build tag `latest`, you need:
 
-  1) A `rootfs` tarball that contains the filesystem. I've generated the tarball already (you can find it at `./tag-latest/centos-8-adevur0-amd64.tar.xz` for `amd64`, and at `./tag-latest/centos-8-adevur0-aarch64.tar.xz` for `arm64v8`), but you can also generate it by yourself.
+  1) A `rootfs` tarball that contains the filesystem. I've generated the tarball already (you can find it at `./tag-latest/centos-8-adevur0-$ARCH.tar.xz`; replace `$ARCH` with `amd64`, `aarch64` or `ppc64le`), but you can also generate it by yourself.
   
-  2) A kickstart script, in case you want to build the tarball yourself. I've already written a kickstart script (you can find it at `./tag-latest/centos-8-adevur0-amd64.ks` for `amd64`, and at `./tag-latest/centos-8-adevur0-aarch64.ks` for `arm64v8`). You can write one yourself too, if you want to customize something.
+  2) A kickstart script, in case you want to build the tarball yourself. I've already written a kickstart script (you can find it at `./tag-latest/centos-8-adevur0-$ARCH.ks`; replace `$ARCH` with `amd64`, `aarch64` or `ppc64le`). You can write one yourself too, if you want to customize something.
   
-  3) A `Dockerfile` (you can find an example at `./tag-latest/Dockerfile.amd64` for `amd64`, and at `./tag-latest/Dockerfile.arm64v8` for `arm64v8`).
+  3) A `Dockerfile` (you can find it at `./tag-latest/Dockerfile.$ARCH`; replace `$ARCH` with `amd64`, `aarch64` or `ppc64le`).
   
 - In order to build `adevur/centos-8:init` and `adevur/centos-8:systemd`, you just need their `Dockerfile`s.
 
 ### Create the Docker image itself
 In case you already have the tarball, you can simply type:
 ```sh
-# building latest tag (for AMD64 arch)
+# building latest tag (for amd64 arch)
 docker build --tag local/centos-8:latest --file ./tag-latest/Dockerfile.amd64 ./tag-latest
 
-# building latest tag (for ARM64v8 arch)
+# building latest tag (for arm64v8 arch)
 docker build --tag local/centos-8:latest --file ./tag-latest/Dockerfile.arm64v8 ./tag-latest
 
+# building latest tag (for ppc64le arch)
+docker build --tag local/centos-8:latest --file ./tag-latest/Dockerfile.ppc64le ./tag-latest
+
 # building init tag
-# NOTE: you need to edit file './tag-init/Dockerfile.amd64' and change 'FROM docker.io/adevur/centos-8:latest' to 'FROM local/centos-8:latest'
-docker build --tag local/centos-8:init --file ./tag-init/Dockerfile.arm64v8 ./tag-init
+# NOTE: you need to edit file './tag-init/Dockerfile' and change 'FROM docker.io/adevur/centos-8:latest' to 'FROM local/centos-8:latest'
+docker build --tag local/centos-8:init ./tag-init
 
 # building systemd tag
-# NOTE: you need to edit file './tag-systemd/Dockerfile.amd64' and change 'FROM docker.io/adevur/centos-8:latest' to 'FROM local/centos-8:latest'
-docker build --tag local/centos-8:systemd --file ./tag-systemd/Dockerfile.arm64v8 ./tag-systemd
+# NOTE: you need to edit file './tag-systemd/Dockerfile' and change 'FROM docker.io/adevur/centos-8:latest' to 'FROM local/centos-8:latest'
+docker build --tag local/centos-8:systemd ./tag-systemd
 ```
 
 ### Create a tarball using a kickstart script
