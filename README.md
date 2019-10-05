@@ -61,7 +61,7 @@ systemctl status sshd.service
   
   2) A kickstart script, in case you want to build the tarball yourself. I've already written a kickstart script (you can find it at `./tag-latest/centos-8-adevur0-$ARCH.ks`; replace `$ARCH` with `amd64`, `aarch64` or `ppc64le`). You can write one yourself too, if you want to customize something.
   
-  3) A `Dockerfile` (you can find it at `./tag-latest/Dockerfile.$ARCH`; replace `$ARCH` with `amd64`, `aarch64` or `ppc64le`).
+  3) A `Dockerfile` (you can find it at `./tag-latest/Dockerfile.$ARCH`; replace `$ARCH` with `amd64`, `arm64v8` or `ppc64le`).
   
 - In order to build `adevur/centos-8:init` and `adevur/centos-8:systemd`, you just need their `Dockerfile`s.
 
